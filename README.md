@@ -1,5 +1,6 @@
 # kk_videoCompress
 
+本项目依赖于ffmpeg
 Windows环境须安装ffmpeg:
 
 1. 下载ffmpeg: https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip
