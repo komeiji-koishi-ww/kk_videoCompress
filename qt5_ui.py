@@ -70,9 +70,6 @@ class MainWindow(QMainWindow):
         # 设置窗口大小
         self.setFixedSize(window_width, window_height)
 
-        self.dialog = ProgressDialog()
-        self.dialog.closeSignal.connect(self.handle_dialog_close)
-
 
     def select_file(self):
         file_dialog = QFileDialog()
@@ -116,18 +113,20 @@ class MainWindow(QMainWindow):
             crf = self.crf_tf.text()
             target_file_size = self.target_size.text()
 
+            dialog = ProgressDialog()
+            dialog.closeSignal.connect(self.handle_dialog_close)
 
             self.thread = ui_thread()
-            self.thread.progress_signal.connect(self.dialog.update_progress)
+            self.thread.progress_signal.connect(dialog.update_progress)
             self.thread.success_signal.connect(self.handle_success)
             self.thread.error_signal.connect(self.handle_error)
 
             self.thread.setValue(input_file, output_file, crf, target_file_size)
             self.thread.start()
 
-            self.dialog.setStatus(output_file)
-            self.dialog.setModal(True)  # 将对话框设置为模态对话框
-            self.dialog.exec_()
+            dialog.setStatus(output_file)
+            dialog.setModal(True)  # 将对话框设置为模态对话框
+            dialog.exec_()
 
     def handle_success(self):
 
